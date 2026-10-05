@@ -2,263 +2,259 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>یادآور تولد</title>
 <script src="xlsx.full.min.js"></script>
 <style>
-:root{--bg:#f6f7fb;--card:#fff;--tx:#1d2433;--mu:#6b7385;--ac:#4f46e5;--bd:#e3e6ee;--hl:#fff4d6}
-@media(prefers-color-scheme:dark){:root{--bg:#12151c;--card:#1c212c;--tx:#e9ecf3;--mu:#98a0b3;--ac:#8b85ff;--bd:#2d3444;--hl:#3a3216}}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--tx);font-family:Vazirmatn,Tahoma,sans-serif;padding:16px;max-width:900px;margin-inline:auto}
-h1{font-size:22px;margin:0 0 4px}h2{font-size:17px;margin:0 0 10px}
+:root{--bg:#f6f7fb;--card:#fff;--tx:#1d2433;--mu:#6b7385;--ac:#4f46e5;--bd:#e3e6ee;--hl:#fff4d6;--ok:#12805c;--wr:#b45309;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12151c;--card:#1c212c;--tx:#e9ecf3;--mu:#98a0b3;--ac:#8b85ff;--bd:#2d3444;--hl:#3a3216;--ok:#4cc79b;--wr:#f0a44b}}
+:root[data-theme="dark"]{--bg:#12151c;--card:#1c212c;--tx:#e9ecf3;--mu:#98a0b3;--ac:#8b85ff;--bd:#2d3444;--hl:#3a3216;--ok:#4cc79b;--wr:#f0a44b}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.6 Vazirmatn,Tahoma,sans-serif;padding:14px 14px 84px;max-width:760px;margin-inline:auto}
+h1{font-size:21px;margin:0}h2{font-size:16px;margin:16px 0 8px}
 .mu{color:var(--mu);font-size:13px}
-.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;margin:12px 0}
-.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-select,input,button{font:inherit;padding:6px 10px;border-radius:8px;border:1px solid var(--bd);background:var(--card);color:var(--tx)}
-button,.btn{background:var(--ac);color:#fff;border:0;cursor:pointer}
-.item{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px solid var(--bd)}
-.item:first-of-type{border-top:0}
-.item.today{background:var(--hl);border-radius:8px;padding-inline:8px}
-.n{font-weight:700}.badge{white-space:nowrap;font-size:13px;color:var(--ac);font-weight:700}
-.empty{color:var(--mu);font-size:14px}
-.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px}
-.tabs{display:flex;gap:8px;flex-wrap:wrap}
-.tabs button{background:var(--card);color:var(--tx);border:1px solid var(--bd)}
-.tabs button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
-button.chip{cursor:pointer;color:var(--ac)}
-@media print{.noprint,.cf{display:none!important}body{background:#fff;color:#000}.card{break-inside:avoid}}
-.chip{background:var(--bg);border:1px solid var(--bd);border-radius:20px;padding:2px 10px;font-size:12.5px}
-.banner{background:var(--hl);border:2px dashed var(--ac);border-radius:14px;padding:14px;margin:12px 0;font-size:18px;font-weight:700;text-align:center;animation:pop 1.2s ease-in-out infinite alternate}
-@keyframes pop{to{transform:scale(1.02)}}
-.cf{position:fixed;top:-30px;font-size:22px;pointer-events:none;animation:fall linear forwards;z-index:9}
-@keyframes fall{to{transform:translateY(110vh) rotate(360deg)}}
+input,select,button{font:inherit;padding:8px 10px;border-radius:10px;border:1px solid var(--bd);background:var(--card);color:var(--tx);max-width:100%}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0}
+.row input[type=search],.row input.grow{flex:1;min-width:140px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;margin:10px 0}
+.f{display:grid;grid-template-columns:1fr 1fr;gap:8px}.f .w{grid-column:1/-1}.f label{font-size:12.5px;color:var(--mu);display:block}.f input{width:100%}
+.pc{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:12px;margin:8px 0}
+.pc.today{background:var(--hl);border-color:var(--ac)}.pc.done{opacity:.8}
+.top{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.nm{font-weight:700;font-size:16px}.when{color:var(--ac);font-weight:700;white-space:nowrap;font-size:14px}
+.role{display:inline-block;margin-inline-start:8px;font-size:12px;background:var(--bg);border:1px solid var(--bd);border-radius:20px;padding:0 9px;color:var(--mu)}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}.chip{background:var(--bg);border:1px solid var(--bd);border-radius:20px;padding:1px 9px;font-size:12.5px}
+.acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.b{background:var(--card);cursor:pointer;text-decoration:none;color:var(--tx);font-size:13.5px;padding:6px 11px}
+.b.ok{background:var(--ok);color:#fff;border-color:var(--ok)}.b.pri{background:var(--ac);color:#fff;border-color:var(--ac)}.b.dg{color:var(--wr)}
+.gt{font-weight:700;margin:18px 2px 4px}.gt.wr{color:var(--wr)}
+.pr{display:flex;justify-content:space-between;gap:8px;padding:10px 0;border-top:1px solid var(--bd)}.pr:first-child{border-top:0}
+.sw{display:flex;align-items:center;gap:8px;padding:6px 0}.sw input{width:20px;height:20px;padding:0}
+nav{position:fixed;bottom:0;left:0;right:0;display:flex;background:var(--card);border-top:1px solid var(--bd);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));gap:4px;z-index:5}
+nav button{flex:1;border:0;background:none;font-size:12px;padding:4px 2px;line-height:1.3}nav button.on{color:var(--ac);font-weight:700}
+nav span{display:block;font-size:20px}
+#toast{position:fixed;bottom:76px;left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:8px 16px;border-radius:20px;font-size:13px;z-index:9}
 </style>
 </head>
 <body>
 <h1>🎂 یادآور تولد</h1>
 <div class="mu" id="today"></div>
 
-<div class="card noprint">
-  <div class="row">
-    <label class="btn" style="padding:6px 12px;border-radius:8px;cursor:pointer">انتخاب فایل اکسل<input type="file" id="file" accept=".xlsx,.xls" hidden></label>
-    <span class="mu" id="status">در حال تلاش برای خواندن خودکار فایل اکسل کنار صفحه...</span>
-    <input id="q" placeholder="🔍 جستجوی نام..." style="margin-inline-start:auto">
-    <button onclick="window.print()">🖨️ چاپ</button>
-  </div>
-  <div class="row" id="map" style="margin-top:10px;display:none">
-    <label>نام: <select id="cName"></select></label>
-    <label>نام خانوادگی: <select id="cFam"></select></label>
-    <label>تاریخ تولد: <select id="cDate"></select></label>
-    <label>توضیحات: <select id="cDesc"></select></label>
-    <label>بازه «پیش رو» (روز): <input type="number" id="days" value="30" min="1" max="365" style="width:70px"></label>
-    <label>تقویم قمری: <select id="cal"><option value="islamic-umalqura">ام‌القری</option><option value="islamic-civil">civil</option><option value="islamic">نجومی</option></select></label>
-    <label>تعدیل (روز): <select id="off"><option value="-1">−۱</option><option value="0" selected>۰</option><option value="1">+۱</option></select></label>
-  </div>
-</div>
+<section id="v-home">
+  <div class="row"><input type="search" id="hq" placeholder="🔍 جستجوی نام..."><label class="chip"><input type="checkbox" id="hOnly" style="width:auto;padding:0"> فقط تبریک‌نگفته‌ها</label></div>
+  <div id="hl"></div>
+</section>
 
-<div class="tabs noprint"><button data-v="list" class="on">🎂 تولدها</button><button data-v="year">📅 تقویم سال</button><button data-v="stats">📊 آمار مدرسه</button></div>
-<div id="out"></div>
+<section id="v-people" hidden>
+  <div class="row"><input type="search" id="pq" placeholder="🔍 جستجو در افراد..."><button class="b pri" data-a="add">➕ افزودن</button></div>
+  <div class="card" id="form" hidden>
+    <h2 style="margin-top:0" id="fTitle">افزودن فرد</h2>
+    <div class="f">
+      <div><label>نام</label><input id="fFn"></div>
+      <div><label>نام خانوادگی</label><input id="fLn"></div>
+      <div><label>نقش (هر متنی)</label><input id="fRole" list="roles" placeholder="دانش‌آموز، معلم، همکار..."></div>
+      <div><label>شماره تماس (اختیاری)</label><input id="fPhone" inputmode="tel" dir="ltr"></div>
+      <div><label>تاریخ تولد شمسی</label><input id="fDate" inputmode="numeric" placeholder="13910521 یا 1391/05/21" dir="ltr"></div>
+      <div><label>تاریخ تولد قمری (اختیاری)</label><input id="fLunar" inputmode="numeric" placeholder="1412/09/15" dir="ltr"></div>
+      <div class="w mu" id="fPrev"></div>
+    </div>
+    <datalist id="roles"><option value="دانش‌آموز"><option value="معلم"><option value="همکار"><option value="مدیر"><option value="خانواده"><option value="دوست"></datalist>
+    <div class="row"><button class="b pri" data-a="save">💾 ذخیره</button><button class="b" data-a="cancel">انصراف</button></div>
+    <div class="mu">اگر فقط یکی از دو تاریخ را بدانید کافی است؛ دیگری محاسبه می‌شود.</div>
+  </div>
+  <div id="pl"></div>
+</section>
+
+<section id="v-set" hidden>
+  <div class="card"><h2 style="margin-top:0">نمایش در کارت‌ها</h2><div id="toggles"></div>
+    <div class="mu">نام و نام خانوادگی همیشه نمایش داده می‌شود.</div></div>
+  <div class="card"><h2 style="margin-top:0">محاسبه‌ی خودکار تاریخ قمری</h2>
+    <div class="row"><select id="sCal"><option value="islamic-umalqura">ام‌القری</option><option value="islamic-civil">civil (حسابی)</option><option value="islamic">نجومی</option></select>
+    <select id="sOff"><option value="-1">تعدیل −۱ روز</option><option value="0">بدون تعدیل</option><option value="1">تعدیل +۱ روز</option></select></div>
+    <div class="mu">تقویم رسمی ایران رؤیت هلال است و ممکن است یک روز با محاسبه فرق کند. اگر تاریخ قمری را دستی وارد کنید، همان نمایش داده می‌شود.</div></div>
+  <div class="card"><h2 style="margin-top:0">اکسل و داده‌ها</h2>
+    <div class="row"><button class="b" data-a="sample">⬇️ نمونه‌ی اکسل</button><button class="b" data-a="export">📤 خروجی اکسل</button>
+    <label class="b">📥 وارد کردن از اکسل<input type="file" id="imp" accept=".xlsx,.xls" hidden></label></div>
+    <div class="row"><button class="b" data-a="demo">🧪 داده‌ی نمونه برای دیدن برنامه</button><button class="b dg" data-a="clear">🗑️ حذف همه‌ی اطلاعات</button></div>
+    <div class="mu">اطلاعات فقط در همین دستگاه ذخیره می‌شود.</div></div>
+</section>
+
+<nav><button data-v="home" class="on"><span>🎂</span>تولدها</button><button data-v="people"><span>👥</span>افراد</button><button data-v="set"><span>⚙️</span>تنظیمات</button></nav>
+<div id="toast" hidden></div>
 
 <script>
-/* ---------- تبدیل تاریخ شمسی/میلادی (الگوریتم jalaali) ---------- */
-const div=(a,b)=>~~(a/b), mod=(a,b)=>a-~~(a/b)*b;
+/* ===== تبدیل تاریخ (الگوریتم jalaali) ===== */
+const div=(a,b)=>~~(a/b),mod=(a,b)=>a-~~(a/b)*b;
 const BR=[-61,9,38,199,426,686,756,818,1111,1181,1210,1635,2060,2097,2192,2262,2324,2394,2456,3178];
 function jalCal(jy){let gy=jy+621,leapJ=-14,jp=BR[0],jm,jump,i;
  for(i=1;i<BR.length;i++){jm=BR[i];jump=jm-jp;if(jy<jm)break;leapJ+=div(jump,33)*8+div(mod(jump,33),4);jp=jm}
- let n=jy-jp;leapJ+=div(n,33)*8+div(mod(n,33)+3,4);
- if(mod(jump,33)===4&&jump-n===4)leapJ++;
- const leapG=div(gy,4)-div((div(gy,100)+1)*3,4)-150, march=20+leapJ-leapG;
- if(jump-n<6)n=n-jump+div(jump+4,33)*33;
- let leap=mod(mod(n+1,33)-1,4);if(leap===-1)leap=4;
- return{leap,gy,march}}
-function g2d(gy,gm,gd){let d=div((gy+div(gm-8,6)+100100)*1461,4)+div(153*mod(gm+9,12)+2,5)+gd-34840408;
- return d-div(div(gy+100100+div(gm-8,6),100)*3,4)+752}
-function d2gy(jdn){let j=4*jdn+139361631;j+=div(div(4*jdn+183187720,146097)*3,4)*4-3908;
- const i=div(mod(j,1461),4)*5+308,gm=mod(div(i,153),12)+1;return div(j,1461)-100100+div(8-gm,6)}
+ let n=jy-jp;leapJ+=div(n,33)*8+div(mod(n,33)+3,4);if(mod(jump,33)===4&&jump-n===4)leapJ++;
+ const leapG=div(gy,4)-div((div(gy,100)+1)*3,4)-150,march=20+leapJ-leapG;
+ if(jump-n<6)n=n-jump+div(jump+4,33)*33;let leap=mod(mod(n+1,33)-1,4);if(leap===-1)leap=4;return{leap,gy,march}}
+function g2d(gy,gm,gd){let d=div((gy+div(gm-8,6)+100100)*1461,4)+div(153*mod(gm+9,12)+2,5)+gd-34840408;return d-div(div(gy+100100+div(gm-8,6),100)*3,4)+752}
+function d2gy(j){let x=4*j+139361631;x+=div(div(4*j+183187720,146097)*3,4)*4-3908;const i=div(mod(x,1461),4)*5+308,gm=mod(div(i,153),12)+1;return div(x,1461)-100100+div(8-gm,6)}
 function j2d(jy,jm,jd){const r=jalCal(jy);return g2d(r.gy,3,r.march)+(jm-1)*31-div(jm,7)*(jm-7)+jd-1}
-function d2j(jdn){const gy=d2gy(jdn);let jy=gy-621,r=jalCal(jy),k=jdn-g2d(gy,3,r.march),jm,jd;
- if(k>=0){if(k<=185){jm=1+div(k,31);jd=mod(k,31)+1;return{jy,jm,jd}}k-=186}
- else{jy--;k+=179;if(r.leap===1)k++}
- jm=7+div(k,30);jd=mod(k,30)+1;return{jy,jm,jd}}
+function d2j(j){const gy=d2gy(j);let jy=gy-621,r=jalCal(jy),k=j-g2d(gy,3,r.march),jm,jd;
+ if(k>=0){if(k<=185){return{jy,jm:1+div(k,31),jd:mod(k,31)+1}}k-=186}else{jy--;k+=179;if(r.leap===1)k++}
+ return{jy,jm:7+div(k,30),jd:mod(k,30)+1}}
 const isLeap=y=>jalCal(y).leap===0;
 const MONTHS=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
 const WD=['شنبه','یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه'];
-const fa=n=>String(n).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
-
-/* ---------- امروز ---------- */
-const now=new Date(), todayJdn=g2d(now.getFullYear(),now.getMonth()+1,now.getDate());
-const T=d2j(todayJdn), wdIdx=mod(todayJdn+2,7);
-document.getElementById('today').textContent=`امروز: ${WD[wdIdx]} ${fa(T.jd)} ${MONTHS[T.jm-1]} ${fa(T.jy)}`;
-
-/* ---------- خواندن اکسل ---------- */
-let headers=[],data=[];
-const $=id=>document.getElementById(id);
-const normDigits=s=>String(s).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d));
-
-function buf2b64(b){let s='';const u=new Uint8Array(b);for(let i=0;i<u.length;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,i+8192));return btoa(s)}
-function b642buf(t){const s=atob(t),u=new Uint8Array(s.length);for(let i=0;i<s.length;i++)u[i]=s.charCodeAt(i);return u.buffer}
-let lastEv='';
-function pushEvents(all){ // ارسال تولدهای پیش رو به اندروید برای اعلان روزانه
-  if(!window.Android||!Android.setEvents)return;
-  const iso=j=>new Date((j-2440588)*864e5).toISOString().slice(0,10),ev=[];
-  for(const p of all){
-    ev.push({d:iso(p.next),t:p.name+' ('+fa(p.age)+' ساله)'});
-    const o=nextOcc(p.bm,p.bd,p.by+p.age+1);
-    ev.push({d:iso(o.jdn),t:p.name+' ('+fa(p.age+1)+' ساله)'});
-  }
-  const j=JSON.stringify(ev);if(j!==lastEv){lastEv=j;Android.setEvents(j)}
-}
-function load(buf){
-  const wb=XLSX.read(buf,{type:'array'}),ws=wb.Sheets[wb.SheetNames[0]];
-  const rows=XLSX.utils.sheet_to_json(ws,{header:1,raw:true,defval:''});
-  headers=rows[0].map(h=>String(h).trim());
-  data=rows.slice(1).filter(r=>r.some(c=>c!==''));
-  setupMap();$('status').textContent=`${fa(data.length)} ردیف خوانده شد.`;render();
-}
-function guess(fn){const i=headers.findIndex(fn);return i}
-function setupMap(){
-  const opts=['<option value="-1">— ندارد —</option>'].concat(headers.map((h,i)=>`<option value="${i}">${h||'ستون '+fa(i+1)}</option>`)).join('');
-  ['cName','cFam','cDate','cDesc'].forEach(id=>$(id).innerHTML=opts);
-  let d=guess(h=>/تولد|تاریخ|date|birth/i.test(h));
-  if(d<0)d=headers.findIndex((_,i)=>data.slice(0,5).some(r=>/^\d{8}$/.test(normDigits(r[i]).trim())));
-  $('cDate').value=d;
-  const f=guess(h=>/خانوادگی|family|last/i.test(h));
-  $('cFam').value=f;
-  $('cName').value=guess((h,i)=>i!==f&&i!==d&&/نام|name|first/i.test(h));
-  $('cDesc').value=guess(h=>/توضیح|desc|note|یادداشت/i.test(h));
-  $('map').style.display='flex';
-}
-['cName','cFam','cDate','cDesc','days','cal','off'].forEach(id=>$(id).addEventListener('change',render));
 const HM=['محرم','صفر','ربیع‌الاول','ربیع‌الثانی','جمادی‌الاول','جمادی‌الثانی','رجب','شعبان','رمضان','شوال','ذیقعده','ذیحجه'];
-function hijri(jdn){
-  try{
-    const d=new Date((jdn+(+$('off').value)-2440588)*864e5);
-    const p=Object.fromEntries(new Intl.DateTimeFormat('en-u-ca-'+$('cal').value+'-nu-latn',{day:'numeric',month:'numeric',year:'numeric',timeZone:'UTC'}).formatToParts(d).map(x=>[x.type,x.value]));
-    return `${fa(p.day)} ${HM[+p.month-1]} ${fa(p.year)}`;
-  }catch(e){return ''}
-}
-
-/* ---------- محاسبه ---------- */
-function nextOcc(bm,bd,fromYear){ // jdn و سال شمسی تولد بعدی
-  let y=fromYear;
-  const dd=(bm===12&&bd===30&&!isLeap(y))?29:bd;
-  return{jdn:j2d(y,bm,dd),y}
-}
-function people(){
-  const c=id=>+$(id).value,dc=c('cDate'),out=[];
-  if(dc<0)return out;
-  for(const r of data){
-    const s=normDigits(r[dc]).replace(/\D/g,'');
-    if(s.length!==8)continue;
-    const by=+s.slice(0,4),bm=+s.slice(4,6),bd=+s.slice(6,8);
-    if(bm<1||bm>12||bd<1||bd>31)continue;
-    const name=[c('cName')>=0?r[c('cName')]:'',c('cFam')>=0?r[c('cFam')]:''].join(' ').trim()||'(بدون نام)';
-    const desc=c('cDesc')>=0?String(r[c('cDesc')]).trim():'';
-    let o=nextOcc(bm,bd,T.jy);if(o.jdn<todayJdn)o=nextOcc(bm,bd,T.jy+1);
-    out.push({name,desc,by,bm,bd,next:o.jdn,age:o.y-by,left:o.jdn-todayJdn,bwd:WD[mod(j2d(by,bm,bd)+2,7)],bj:j2d(by,bm,bd)});
-  }
-  const q=$('q').value.trim();
-  return q?out.filter(p=>p.name.includes(q)):out;
-}
-function item(p){
-  const when=p.left===0?'امروز 🎉':p.left===1?'فردا':`${fa(p.left)} روز دیگر`;
-  return `<div class="item ${p.left===0?'today':''}"><div><div class="n">${p.name}</div>
-  <div class="mu">${fa(p.bd)} ${MONTHS[p.bm-1]} · ${fa(p.age)} ساله می‌شود${p.desc?' · '+p.desc:''}</div>
-  <div class="mu">متولد ${fa(p.by)}/${fa(p.bm)}/${fa(p.bd)}، روز ${p.bwd}</div>
-  <div class="mu">تاریخ قمری تولد: ${hijri(p.bj)}</div>
-  <div class="chips">${fun(p)}</div></div>
-  <div class="badge">${when}<div class="mu" style="font-weight:400">${WD[mod(todayJdn+p.left+2,7)]}</div></div></div>`;
-}
-function section(title,list,note=''){
-  return `<div class="card"><h2>${title} <span class="mu">(${fa(list.length)})${note}</span></h2>${
-    list.length?list.map(item).join(''):'<div class="empty">موردی وجود ندارد.</div>'}</div>`;
-}
 const ANI=[['موش','🐭'],['گاو','🐮'],['ببر','🐯'],['خرگوش','🐰'],['اژدها','🐲'],['مار','🐍'],['اسب','🐴'],['بز','🐐'],['میمون','🐵'],['خروس','🐓'],['سگ','🐶'],['خوک','🐷']];
-const ZOD=[['حمل','♈'],['ثور','♉'],['جوزا','♊'],['سرطان','♋'],['اسد','♌'],['سنبله','♍'],['میزان','♎'],['عقرب','♏'],['قوس','♐'],['جدی','♑'],['دلو','♒'],['حوت','♓']];
-function chineseAnimal(jdn){
-  const d=new Date((jdn-2440588)*864e5);let y;
-  try{const p=new Intl.DateTimeFormat('en-u-ca-chinese-nu-latn',{year:'numeric',timeZone:'UTC'}).formatToParts(d).find(x=>x.type==='relatedYear');y=+p.value}catch(e){}
-  if(!y)y=d.getUTCFullYear();
-  return ANI[mod(y-4,12)];
-}
 const TUR=['موش','گاو','پلنگ','خرگوش','نهنگ','مار','اسب','گوسفند','میمون','مرغ','سگ','خوک'],TE=['🐭','🐮','🐆','🐰','🐋','🐍','🐴','🐑','🐵','🐔','🐶','🐷'];
-const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function fun(p){
-  const a=chineseAnimal(p.bj),z=ZOD[p.bm-1],lived=todayJdn-p.bj,ti=mod(p.by-7,12);
-  return `<span class="chip">${a[1]} چینی: ${a[0]}</span><span class="chip">${TE[ti]} سال ترکی: ${TUR[ti]}</span><span class="chip">${z[1]} برج ${z[0]}</span><span class="chip">⏳ ${fa(lived.toLocaleString('en'))} روز</span>${p.age===18?'<span class="chip">🎓 ۱۸ سالگی</span>':''}<button class="chip" data-cp="${esc(p.name)}" data-a="${p.age}">📋 پیام تبریک</button>`;
-}
-function confetti(){
-  const E=['🎉','🎈','🎂','✨','🎁','🥳'];
-  for(let i=0;i<30;i++){const s=document.createElement('span');s.className='cf';s.textContent=E[i%E.length];
-    s.style.left=Math.random()*100+'vw';s.style.animationDuration=(3+Math.random()*3)+'s';s.style.animationDelay=Math.random()*2+'s';
-    document.body.appendChild(s);setTimeout(()=>s.remove(),8000)}
-}
-let shown=false,view='list';
-document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{view=b.dataset.v;
-  document.querySelectorAll('.tabs button').forEach(x=>x.classList.toggle('on',x===b));render()});
-$('q').addEventListener('input',render);
-const MSG=[(n,a)=>`🎂 تولدت مبارک ${n} عزیز! ${fa(a)} سالگی پر از انرژی، موفقیت و خاطرات خوب برات آرزو می‌کنم 🎉`,
- (n,a)=>`🥳 ${n} جان، ${fa(a)} سالگیت مبارک! امیدوارم امسال پر از رشد و دستاوردهای بزرگ باشه ✨`,
- (n,a)=>`🌟 تولدت مبارک ${n}! همیشه بدرخشی و به همه‌ی هدف‌هات برسی.`];
-document.addEventListener('click',e=>{const b=e.target.closest('[data-cp]');if(!b)return;
-  const t=MSG[Math.floor(Math.random()*MSG.length)](b.dataset.cp,+b.dataset.a),old=b.textContent;
-  const done=()=>{b.textContent='✅ کپی شد';setTimeout(()=>b.textContent=old,1500)};
-  (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(done).catch(()=>{
-    const x=document.createElement('textarea');x.value=t;document.body.appendChild(x);x.select();document.execCommand('copy');x.remove();done()})});
-function yearView(all){
-  return MONTHS.map((mn,i)=>{const l=all.filter(p=>p.bm===i+1).sort((a,b)=>a.bd-b.bd);
-    return `<div class="card"><h2>${mn} <span class="mu">(${fa(l.length)})${i+1===T.jm?' · ماه جاری':''}</span></h2>${
-      l.length?l.map(p=>`<div class="item"><span>${fa(p.bd)} ${mn} — <span class="n">${esc(p.name)}</span></span><span class="mu">${fa(T.jy-p.by)} ساله در ${fa(T.jy)}</span></div>`).join(''):'<div class="empty">—</div>'}</div>`}).join('');
-}
-function statsView(all){
-  const cnt=Array(12).fill(0);all.forEach(p=>cnt[p.bm-1]++);const mx=Math.max(...cnt);
-  const bars=MONTHS.map((m,i)=>`<div class="item"><span style="min-width:75px">${m}</span><div style="flex:1;background:var(--bg);border-radius:6px"><div style="width:${mx?cnt[i]/mx*100:0}%;background:var(--ac);height:14px;border-radius:6px"></div></div><span class="badge">${fa(cnt[i])}</span></div>`).join('');
-  const g={};all.forEach(p=>(g[p.bm*100+p.bd]=g[p.bm*100+p.bd]||[]).push(p));
-  const shared=Object.values(g).filter(l=>l.length>1).sort((a,b)=>a[0].bm*100+a[0].bd-b[0].bm*100-b[0].bd);
-  const an={};all.forEach(p=>{const a=chineseAnimal(p.bj);an[a[1]+' '+a[0]]=(an[a[1]+' '+a[0]]||0)+1});
-  const top=Object.entries(an).sort((a,b)=>b[1]-a[1]).slice(0,3);
-  const ages=all.map(p=>T.jy-p.by),avg=ages.reduce((a,b)=>a+b,0)/ages.length;
-  return `<div class="card"><h2>📊 خلاصه</h2><div class="chips"><span class="chip">👥 ${fa(all.length)} نفر</span>
-   <span class="chip">📆 شلوغ‌ترین ماه: ${MONTHS[cnt.indexOf(mx)]} (${fa(mx)} نفر)</span>
-   <span class="chip">🎈 میانگین سن: ${fa(avg.toFixed(1))}</span>
-   <span class="chip">🐾 پرتکرارترین‌ها: ${top.map(t=>t[0]+' ('+fa(t[1])+')').join('، ')}</span></div></div>
-   <div class="card"><h2>تعداد تولد در هر ماه</h2>${bars}</div>
-   <div class="card"><h2>🎭 هم‌تولدی‌ها <span class="mu">(${fa(shared.length)} روز مشترک)</span></h2>${
-    shared.length?shared.map(l=>`<div class="item"><span class="n">${fa(l[0].bd)} ${MONTHS[l[0].bm-1]}</span><span>${l.map(p=>esc(p.name)).join('، ')}</span></div>`).join(''):'<div class="empty">تولد مشترکی پیدا نشد.</div>'}</div>`;
-}
-function render(){
-  const all=people();if(!all.length){$('out').innerHTML='<div class="card empty">داده‌ی معتبری پیدا نشد؛ ستون تاریخ تولد را بررسی کنید.</div>';return}
-  const N=+$('days').value||30;
-  pushEvents(all);
-  if(view==='year'){$('out').innerHTML=yearView(all);return}
-  if(view==='stats'){$('out').innerHTML=statsView(all);return}
-  const sorted=[...all].sort((a,b)=>a.left-b.left);
-  const near=sorted.filter(p=>p.left<=N);
-  const wStart=todayJdn-wdIdx,wEnd=wStart+6; // هفته: شنبه تا جمعه
-  const week=all.filter(p=>[T.jy-1,T.jy,T.jy+1].some(y=>{const j=nextOcc(p.bm,p.bd,y).jdn;return j>=wStart&&j<=wEnd}))
-    .map(p=>{const j=[T.jy-1,T.jy,T.jy+1].map(y=>nextOcc(p.bm,p.bd,y)).find(o=>o.jdn>=wStart&&o.jdn<=wEnd);
-      return{...p,left:j.jdn-todayJdn,age:j.y-p.by}}).sort((a,b)=>a.left-b.left);
-  const month=all.filter(p=>p.bm===T.jm).map(p=>{const j=nextOcc(p.bm,p.bd,T.jy);return{...p,left:j.jdn-todayJdn,age:T.jy-p.by}})
-    .sort((a,b)=>a.bd-b.bd);
-  const tb=sorted.filter(p=>p.left===0);
-  if(tb.length&&!shown){shown=true;confetti()}
-  $('out').innerHTML=(tb.length?`<div class="banner">🎂 امروز تولد ${tb.map(p=>p.name+' ('+fa(p.age)+' ساله)').join('، ')} است! 🎉</div>`:'')
-    +section(`تولدهای پیش رو (${fa(N)} روز آینده)`,near)
-    +section('تولدهای این هفته',week)
-    +section(`تولدهای ${MONTHS[T.jm-1]} ماه`,month);
-}
+const ZOD=[['حمل','♈'],['ثور','♉'],['جوزا','♊'],['سرطان','♋'],['اسد','♌'],['سنبله','♍'],['میزان','♎'],['عقرب','♏'],['قوس','♐'],['جدی','♑'],['دلو','♒'],['حوت','♓']];
+const fa=n=>String(n).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
+const nd=s=>String(s==null?'':s).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const $=id=>document.getElementById(id),pad=n=>String(n).padStart(2,'0');
+const now=new Date(),todayJdn=g2d(now.getFullYear(),now.getMonth()+1,now.getDate()),T=d2j(todayJdn),wdIdx=mod(todayJdn+2,7);
+$('today').textContent=`امروز: ${WD[wdIdx]} ${fa(T.jd)} ${MONTHS[T.jm-1]} ${fa(T.jy)}`;
 
-/* ---------- بارگذاری ---------- */
-$('file').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;
-  const r=new FileReader();r.onload=()=>{try{localStorage.setItem('bd_xlsx',buf2b64(r.result))}catch(e){}load(r.result)};r.readAsArrayBuffer(f)});
-(async()=>{
-  try{const st=localStorage.getItem('bd_xlsx');if(st){load(b642buf(st));return}}catch(e){}
-  const base=location.pathname.split('/').pop().replace(/\.[^.]+$/,'')||'index';
-  for(const n of [base+'.xlsx','birthdays.xlsx','data.xlsx']){
-    try{const r=await fetch(n);if(r.ok){load(await r.arrayBuffer());return}}catch(e){}
-  }
-  $('status').textContent='فایل به‌صورت خودکار خوانده نشد؛ لطفاً با دکمه‌ی بالا فایل اکسل را انتخاب کنید.';
-})();
+/* ===== ذخیره‌سازی ===== */
+const LS={g(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},s(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+let people=LS.g('bd_people',[]),cong=LS.g('bd_cong',{});
+const S=Object.assign({lunar:1,wd:1,greg:0,cn:0,tr:0,zod:0,lived:0,cal:'islamic-umalqura',off:0},LS.g('bd_set',{}));
+const saveP=()=>LS.s('bd_people',people),saveC=()=>LS.s('bd_cong',cong),saveS=()=>LS.s('bd_set',S);
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+function toast(t){const e=$('toast');e.textContent=t;e.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>e.hidden=true,2200)}
+
+/* ===== توابع تاریخ ===== */
+let _f,_fc;
+function hp(j){try{const c=S.cal;if(_fc!==c){_f=new Intl.DateTimeFormat('en-u-ca-'+c+'-nu-latn',{day:'numeric',month:'numeric',year:'numeric',timeZone:'UTC'});_fc=c}
+ const o={};for(const x of _f.formatToParts(new Date((j+(+S.off)-2440588)*864e5)))o[x.type]=+x.value;return o.day?{d:o.day,m:o.month,y:o.year}:null}catch(e){return null}}
+const fmtL=h=>h?`${fa(h.d)} ${HM[h.m-1]} ${fa(h.y)}`:'';
+function parse3(s){const a=nd(s).match(/\d+/g);if(!a)return null;
+ if(a.length===1&&a[0].length===8)return[+a[0].slice(0,4),+a[0].slice(4,6),+a[0].slice(6)];
+ return a.length>=3?[+a[0],+a[1],+a[2]]:null}
+const okS=t=>t&&t[0]>=1200&&t[0]<=1600&&t[1]>=1&&t[1]<=12&&t[2]>=1&&t[2]<=(t[1]<=6?31:30);
+function parseL(s){let t=parse3(s);if(!t)return null;if(t[0]<100&&t[2]>=1000)t=[t[2],t[1],t[0]];
+ return t[0]>=1&&t[0]<=1700&&t[1]>=1&&t[1]<=12&&t[2]>=1&&t[2]<=30?{y:t[0],m:t[1],d:t[2]}:null}
+function lunarToJdn(y,m,d){const est=1948440+Math.round((y-1)*354.367+(m-1)*29.53+d-1);
+ for(let j=est-45;j<=est+45;j++){const x=hp(j);if(x&&x.y===y&&x.m===m&&x.d===d)return j}return null}
+function resolve(ds,ls){const t=parse3(ds);
+ if(t&&okS(t))return{bj:j2d(t[0],t[1],t[2]),date:''+t[0]+pad(t[1])+pad(t[2])};
+ const l=parseL(ls);if(l){const j=lunarToJdn(l.y,l.m,l.d);if(j){const x=d2j(j);return{bj:j,date:''+x.jy+pad(x.jm)+pad(x.jd)}}}return null}
+const greg=j=>{const d=new Date((j-2440588)*864e5);return d.getUTCFullYear()+'/'+pad(d.getUTCMonth()+1)+'/'+pad(d.getUTCDate())};
+function nextOcc(bm,bd,y){const dd=(bm===12&&bd===30&&!isLeap(y))?29:bd;return{jdn:j2d(y,bm,dd),y}}
+function chineseAnimal(j){let y;try{const p=new Intl.DateTimeFormat('en-u-ca-chinese-nu-latn',{year:'numeric',timeZone:'UTC'}).formatToParts(new Date((j-2440588)*864e5)).find(x=>x.type==='relatedYear');y=+p.value}catch(e){}
+ if(!y)y=new Date((j-2440588)*864e5).getUTCFullYear();return ANI[mod(y-4,12)]}
+
+/* ===== اطلاعات هر فرد ===== */
+const nm=p=>((p.fn||'')+' '+(p.ln||'')).trim()||'(بدون نام)';
+function info(p){const t=parse3(p.date);if(!okS(t))return null;const[by,bm,bd]=t;
+ let o=nextOcc(bm,bd,T.jy);if(o.jdn<todayJdn)o=nextOcc(bm,bd,T.jy+1);const pv=nextOcc(bm,bd,o.y-1);
+ return{p,by,bm,bd,bj:j2d(by,bm,bd),left:o.jdn-todayJdn,age:o.y-by,y:o.y,pleft:pv.jdn-todayJdn,page:o.y-1-by,py:o.y-1}}
+function lunarOf(p,bj){const l=parseL(p.lunar);return l?fmtL(l):fmtL(hp(bj))}
+function chips(x){const c=[],a=chineseAnimal(x.bj),ti=mod(x.by-7,12),z=ZOD[x.bm-1];
+ if(S.lunar)c.push('🌙 '+lunarOf(x.p,x.bj));
+ if(S.wd)c.push('📆 متولد '+WD[mod(x.bj+2,7)]);
+ if(S.greg)c.push('🌍 '+greg(x.bj));
+ if(S.cn)c.push(a[1]+' چینی: '+a[0]);
+ if(S.tr)c.push(TE[ti]+' ترکی: '+TUR[ti]);
+ if(S.zod)c.push(z[1]+' برج '+z[0]);
+ if(S.lived)c.push('⏳ '+fa((todayJdn-x.bj).toLocaleString('en'))+' روز');
+ return c.map(t=>`<span class="chip">${esc(t)}</span>`).join('')}
+function msg(p,age){const formal=/معلم|استاد|همکار|مدیر|دکتر|آقا|خانم/.test(p.role||'');
+ return formal?`🎂 ${p.fn||''} عزیز، ${fa(age)}‌ سالگی‌تان مبارک! آرزوی سلامتی و موفقیت دارم.`:`🎉 تولدت مبارک ${p.fn||''} جان! ${fa(age)} سالگی پر از شادی و موفقیت برات آرزو می‌کنم 🎂`}
+
+/* ===== صفحه‌ی اصلی ===== */
+function card(x,miss){const p=x.p,left=miss?x.pleft:x.left,age=miss?x.page:x.age,y=miss?x.py:x.y,k=p.id+':'+y,done=!!cong[k];
+ const when=left===0?'امروز 🎉':left===1?'فردا':left<0?fa(-left)+' روز پیش':fa(left)+' روز دیگر';
+ return `<div class="pc${left===0?' today':''}${done?' done':''}"><div class="top"><div><span class="nm">${esc(nm(p))}</span>${p.role?`<span class="role">${esc(p.role)}</span>`:''}</div><span class="when">${when}</span></div>
+ <div class="mu">${fa(x.bd)} ${MONTHS[x.bm-1]} · ${fa(age)} ساله ${left<0?'شد':'می‌شود'}</div><div class="chips">${chips(x)}</div>
+ <div class="acts"><button class="b${done?' ok':''}" data-a="cong" data-k="${k}">${done?'✅ تبریک گفته شد':'🎁 تبریک گفتم'}</button>${p.phone?`<a class="b" href="tel:${esc(p.phone)}">📞</a><a class="b" href="sms:${esc(p.phone)}?body=${encodeURIComponent(msg(p,age))}">💬</a>`:''}<button class="b" data-a="edit" data-id="${p.id}">✏️</button></div></div>`}
+let showAll=false;
+function drawHome(){
+ const q=$('hq').value.trim(),only=$('hOnly').checked,all=people.map(info).filter(Boolean);
+ if(!people.length){$('hl').innerHTML=`<div class="card"><b>هنوز کسی اضافه نشده.</b><div class="mu">از بخش «افراد» اطلاعات را وارد کنید یا از اکسل بیاورید.</div><div class="row"><button class="b pri" data-a="add">➕ افزودن اولین نفر</button><button class="b" data-a="demo">🧪 دیدن با داده‌ی نمونه</button></div></div>`;return}
+ const endW=6-wdIdx,mLen=T.jm<=6?31:T.jm<12?30:(isLeap(T.jy)?30:29),endM=mLen-T.jd,g={miss:[],today:[],week:[],month:[],later:[]};let hidden=0;
+ for(const x of all){if(q&&!nm(x.p).includes(q))continue;
+  if(x.left>0&&x.pleft<0&&x.pleft>=-7&&!cong[x.p.id+':'+x.py])g.miss.push(x);
+  if(only&&cong[x.p.id+':'+x.y])continue;
+  const l=x.left,b=l===0?'today':l<=endW?'week':l<=endM?'month':(l<=60||showAll)?'later':null;
+  if(b)g[b].push(x);else hidden++}
+ const T2=[['miss','⚠️ از قلم افتاده (۷ روز اخیر)'],['today','🎉 امروز'],['week','📅 تا پایان این هفته'],['month','🗓️ بقیه‌ی '+MONTHS[T.jm-1]],['later','⏭️ بعدی‌ها']];
+ let h='';for(const[k,t]of T2){if(!g[k].length)continue;
+  g[k].sort(k==='miss'?(a,b)=>b.pleft-a.pleft:(a,b)=>a.left-b.left);
+  h+=`<div class="gt${k==='miss'?' wr':''}">${t} <span class="mu">(${fa(g[k].length)})</span></div>`+g[k].map(x=>card(x,k==='miss')).join('')}
+ if(hidden)h+=`<div class="row"><button class="b" data-a="more">نمایش همه‌ی تولدهای بعدی (+${fa(hidden)})</button></div>`;
+ else if(showAll)h+=`<div class="row"><button class="b" data-a="less">فقط ۶۰ روز آینده</button></div>`;
+ $('hl').innerHTML=h||'<div class="card mu">موردی برای نمایش نیست.</div>'}
+
+/* ===== فهرست افراد و فرم ===== */
+let armed=null;
+function drawPeople(){const q=$('pq').value.trim();
+ const l=people.filter(p=>!q||nm(p).includes(q)).sort((a,b)=>nm(a).localeCompare(nm(b),'fa'));
+ $('pl').innerHTML=l.length?`<div class="card" style="padding:4px 14px">${l.map(p=>{const x=info(p),t=parse3(p.date);
+  const sh=x?`${fa(x.bd)} ${MONTHS[x.bm-1]} ${fa(x.by)}`:'⚠️ تاریخ نامعتبر';
+  const lu=x?`${lunarOf(p,x.bj)}${parseL(p.lunar)?'':' (خودکار)'}`:'';
+  return `<div class="pr"><div><span class="nm">${esc(nm(p))}</span>${p.role?`<span class="role">${esc(p.role)}</span>`:''}
+  <div class="mu">شمسی: ${sh}${lu?' · قمری: '+lu:''}${p.phone?' · 📞 <span dir="ltr">'+esc(p.phone)+'</span>':''}</div></div>
+  <div class="acts" style="margin:0"><button class="b" data-a="edit" data-id="${p.id}">✏️</button><button class="b dg" data-a="del" data-id="${p.id}">${armed===p.id?'تأیید حذف؟':'🗑️'}</button></div></div>`}).join('')}</div>`:'<div class="card mu">موردی نیست.</div>'}
+function openForm(id){const p=people.find(x=>x.id===id)||{};show('people');$('form').hidden=false;$('form').dataset.id=p.id||'';
+ $('fTitle').textContent=p.id?'ویرایش اطلاعات':'افزودن فرد';
+ const v=(k,i)=>$(i).value=p[k]||'';v('fn','fFn');v('ln','fLn');v('role','fRole');v('phone','fPhone');v('date','fDate');v('lunar','fLunar');prev();$('form').scrollIntoView({behavior:'smooth'})}
+function prev(){const r=resolve($('fDate').value,$('fLunar').value),e=$('fPrev');
+ if(!$('fDate').value&&!$('fLunar').value){e.textContent='';return}
+ if(!r){e.textContent='⚠️ تاریخ معتبر نیست';return}
+ const x=d2j(r.bj);e.textContent=`شمسی: ${fa(x.jd)} ${MONTHS[x.jm-1]} ${fa(x.jy)} · قمری: ${parseL($('fLunar').value)?fmtL(parseL($('fLunar').value)):fmtL(hp(r.bj))} · میلادی: ${greg(r.bj)} · ${WD[mod(r.bj+2,7)]}`}
+['fDate','fLunar'].forEach(i=>$(i).addEventListener('input',prev));
+function saveForm(){const g=i=>$(i).value.trim(),r=resolve(g('fDate'),g('fLunar'));
+ if(!g('fFn')&&!g('fLn'))return toast('نام را وارد کنید');
+ if(!r)return toast('تاریخ تولد معتبر وارد کنید');
+ const id=$('form').dataset.id,o={id:id||uid(),fn:g('fFn'),ln:g('fLn'),role:g('fRole'),phone:g('fPhone'),date:r.date,lunar:parseL(g('fLunar'))?g('fLunar'):''};
+ const i=people.findIndex(p=>p.id===id);if(i>=0)people[i]=o;else people.push(o);
+ saveP();$('form').hidden=true;refresh();toast('ذخیره شد ✅')}
+
+/* ===== ناوبری و رویدادها ===== */
+function show(v){['home','people','set'].forEach(k=>$('v-'+k).hidden=k!==v);
+ document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));window.scrollTo(0,0)}
+let lastEv='';
+function pushEvents(){ // ارسال تولدهای پیش رو (تبریک‌نگفته‌ها) به اندروید برای اعلان روزانه
+ if(!window.Android||!Android.setEvents)return;
+ const iso=j=>new Date((j-2440588)*864e5).toISOString().slice(0,10),ev=[];
+ for(const x of people.map(info).filter(Boolean))for(let k=0;k<2;k++){const y=x.y+k;if(cong[x.p.id+':'+y])continue;
+  ev.push({d:iso(nextOcc(x.bm,x.bd,y).jdn),t:nm(x.p)+(x.p.role?' ('+x.p.role+')':'')})}
+ const j=JSON.stringify(ev);if(j!==lastEv){lastEv=j;Android.setEvents(j)}}
+function refresh(){drawHome();drawPeople();pushEvents()}
+const dl=(rows,name)=>{if(typeof XLSX==='undefined')return toast('کتابخانه‌ی اکسل بارگذاری نشد');
+ const ws=XLSX.utils.aoa_to_sheet(rows),wb=XLSX.utils.book_new();wb.Workbook={Views:[{RTL:true}]};XLSX.utils.book_append_sheet(wb,ws,'تولدها');if(window.Android&&Android.saveFile)Android.saveFile(name,XLSX.write(wb,{bookType:'xlsx',type:'base64'}));else XLSX.writeFile(wb,name)};
+const HD=['نام','نام خانوادگی','نقش','شماره تماس','تاریخ تولد شمسی','تاریخ تولد قمری'];
+function demo(){const mk=(off,by,fn,ln,role,phone)=>{const x=d2j(todayJdn+off);return{id:uid(),fn,ln,role,phone,date:''+by+pad(x.jm)+pad(x.jd),lunar:''}};
+ people=[mk(0,1389,'سارا','احمدی','دانش‌آموز'),mk(1,1388,'علی','رضایی','دانش‌آموز','09120000000'),mk(3,1390,'مریم','کریمی','دانش‌آموز'),mk(9,1370,'حسین','محمدی','معلم','09130000000'),mk(-3,1387,'رضا','حیدری','دانش‌آموز'),mk(30,1365,'زهرا','نوری','همکار')];
+ saveP();refresh();show('home')}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-a],nav button');if(!b)return;
+ if(b.dataset.v)return show(b.dataset.v);const a=b.dataset.a;
+ if(a==='cong'){const k=b.dataset.k;cong[k]?delete cong[k]:cong[k]=1;saveC();drawHome();pushEvents()}
+ else if(a==='edit')openForm(b.dataset.id);else if(a==='add')openForm('');
+ else if(a==='save')saveForm();else if(a==='cancel')$('form').hidden=true;
+ else if(a==='del'){const id=b.dataset.id;if(armed===id){people=people.filter(p=>p.id!==id);armed=null;saveP();refresh();toast('حذف شد')}else{armed=id;drawPeople();setTimeout(()=>{armed=null;drawPeople()},3000)}}
+ else if(a==='more'){showAll=true;drawHome()}else if(a==='less'){showAll=false;drawHome()}
+ else if(a==='demo'){demo()}
+ else if(a==='clear'){if(armed==='all'){people=[];cong={};armed=null;saveP();saveC();refresh();toast('همه حذف شد')}else{armed='all';b.textContent='دوباره بزنید تا حذف شود';setTimeout(()=>{armed=null;b.textContent='🗑️ حذف همه‌ی اطلاعات'},3000)}}
+ else if(a==='sample')dl([HD,['علی','رضایی','دانش‌آموز','09120000000','13880521',''],['زهرا','نوری','معلم','','1365/11/03','1409/05/12']],'نمونه-تولد.xlsx');
+ else if(a==='export')dl([HD,...people.map(p=>[p.fn,p.ln,p.role,p.phone,p.date,p.lunar])],'تولدها.xlsx')});
+$('hq').addEventListener('input',drawHome);$('hOnly').addEventListener('change',drawHome);$('pq').addEventListener('input',drawPeople);
+$('imp').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{
+ const rows=XLSX.utils.sheet_to_json(XLSX.read(r.result,{type:'array'}).Sheets[XLSX.read(r.result,{type:'array'}).SheetNames[0]],{header:1,raw:true,defval:''});
+ const H=rows[0].map(h=>String(h).trim()),ix=fn=>H.findIndex(fn),lu=h=>/قمری|hijri|lunar/i.test(h);
+ const li=ix(h=>/خانوادگی|family|last/i.test(h)),fi=ix((h,i)=>i!==li&&/نام|first|name/i.test(h)),ri=ix(h=>/نقش|سمت|role/i.test(h)),pi=ix(h=>/تلفن|تماس|موبایل|phone|mobile/i.test(h)),hi=ix(lu),di=ix(h=>!lu(h)&&/شمسی|تولد|تاریخ|date|birth/i.test(h));
+ let n=0,bad=0;for(const w of rows.slice(1)){const g=i=>i>=0?String(w[i]==null?'':w[i]).trim():'';if(!w.some(c=>c!==''))continue;
+  const rs=resolve(g(di),g(hi));if(!rs){bad++;continue}let ph=nd(g(pi));if(/^9\d{9}$/.test(ph))ph='0'+ph;
+  const o={id:uid(),fn:g(fi),ln:g(li),role:g(ri),phone:ph,date:rs.date,lunar:parseL(g(hi))?g(hi):''};
+  if(people.some(p=>p.fn===o.fn&&p.ln===o.ln&&p.date===o.date))continue;people.push(o);n++}
+ saveP();refresh();toast(`${fa(n)} نفر اضافه شد`+(bad?` · ${fa(bad)} ردیف تاریخ نامعتبر`:''))}catch(x){toast('خواندن فایل ناموفق بود')}};
+ r.readAsArrayBuffer(f);e.target.value=''});
+
+/* ===== تنظیمات ===== */
+const TG=[['lunar','🌙 تاریخ قمری تولد'],['wd','📆 روز هفته‌ی تولد'],['greg','🌍 تاریخ میلادی'],['cn','🐲 سال چینی'],['tr','🐋 سال ترکی (موش، گاو، ...)'],['zod','♈ برج'],['lived','⏳ تعداد روز زندگی']];
+$('toggles').innerHTML=TG.map(([k,t])=>`<label class="sw"><input type="checkbox" data-s="${k}" ${S[k]?'checked':''}> ${t}</label>`).join('');
+$('toggles').addEventListener('change',e=>{S[e.target.dataset.s]=e.target.checked?1:0;saveS();refresh()});
+$('sCal').value=S.cal;$('sOff').value=S.off;
+$('sCal').onchange=()=>{S.cal=$('sCal').value;saveS();refresh()};$('sOff').onchange=()=>{S.off=+$('sOff').value;saveS();refresh()};
+refresh();
 </script>
 </body>
 </html>
